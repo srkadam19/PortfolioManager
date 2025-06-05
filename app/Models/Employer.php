@@ -8,6 +8,7 @@ class Employer extends Model
 {
     protected $table = "employers";
     protected $fillable = [
-        'name'
+        'name',
+        'talent_id'
     ];
 }

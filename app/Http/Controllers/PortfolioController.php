@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Talent;
 use App\Models\Employer;
+use App\Models\Project;
 use App\Models\Video;
 use App\Services\PortfolioScraper;
 
@@ -17,16 +18,99 @@ class PortfolioController extends Controller
         $talent = Talent::create([
             'username' => $request->username,
             'name' => $data['name'],
-            'bio' => implode(", ", $data['sections'])
+            'email' => $data['email'],
+            'location' => $data['location'],
+            'profile_image' => $data['profileImage'],
+            'social_links' => json_encode($data['social_links']),
+            'bio' => implode(", ", array_column($data['sections'], 'content'))
         ]);
 
-        foreach ($data['videos'] as $videoUrl) {
-            info($talent->id);
-            $employer = Employer::firstOrCreate(['name' => 'Unknown', 'talent_id' => $talent->id]);
-            Video::create(['url' => $videoUrl, 'employer_id' => $employer->id]);
+        // foreach ($data['sections'] as $section) {
+        //     Section::create([
+        //         'talent_id' => $talent->id,
+        //         'title' => $section['title'],
+        //         'content' => $section['content']
+        //     ]);
+        // }
+
+        $employer = Employer::firstOrCreate([
+            'name' => 'Unknown',
+            'talent_id' => $talent->id
+        ]);
+
+        foreach ($data['videos'] as $video) {
+            Video::create([
+                'url' => $video['url'],
+                'title' => $video['title'],
+                'description' => $video['description'],
+                'thumbnail' => $video['thumbnail'],
+                'employer_id' => $employer->id
+            ]);
         }
 
-        return response()->json($talent, 201);
+        return response()->json(['talent' => $talent], 201);
+
+
+        // $scraper = new PortfolioScraper();
+        // $data = $scraper->scrapePortfolio($request->url);
+
+        // $talent = Talent::create([
+        //     'username' => $request->username,
+        //     'name' => $data['name'],
+        //     'bio' => implode(", ", $data['sections'])
+        // ]);
+
+        // foreach ($data['videos'] as $videoUrl) {
+        //     info($talent->id);
+        //     $employer = Employer::firstOrCreate(['name' => 'Unknown', 'talent_id' => $talent->id]);
+        //     Video::create(['url' => $videoUrl, 'employer_id' => $employer->id]);
+        // }
+
+
+        // $talent = Talent::create([
+        //     'username' => $request->username,
+        //     'name' => $data['name'],
+        //     'bio' => implode(", ", $data['sections']),
+        // ]);
+
+        // foreach ($data['videos'] as $videoUrl) {
+        //     $employer = Employer::firstOrCreate(['name' => 'Unknown', 'talent_id' => $talent->id]);
+        //     Video::create(['url' => $videoUrl, 'employer_id' => $employer->id]);
+        // }
+
+
+        // $talent = Talent::create([
+        //     'username' => $request->username,
+        //     'name' => $data['name'],
+        //     'email' => $data['email'] ?? null,
+        //     'phone' => $data['phone'] ?? null,
+        //     'location' => $data['location'] ?? null,
+        //     'profile_image_url' => $data['profileImage'] ?? null,
+        //     'bio' => implode(', ', $data['sections']),
+        // ]);
+        // info('projects');
+        // info($data['projects']);
+        // foreach ($data['projects'] as $projectData) {
+        //     $employer = Employer::firstOrCreate([
+        //         'name' => 'Unknown',
+        //         'talent_id' => $talent->id
+        //     ]);
+
+        //     $project = Project::create([
+        //         'title' => $projectData['title'],
+        //         'description' => $projectData['description'],
+        //         'employer_id' => $employer->id,
+        //     ]);
+
+        //     foreach ($projectData['videos'] as $videoUrl) {
+        //         Video::create([
+        //             'url' => $videoUrl,
+        //             'employer_id' => $employer->id,
+        //             'project_id' => $project->id,
+        //         ]);
+        //     }
+        // }
+        // return response()->json("success", 201);
     }
 
     public function show($username)
