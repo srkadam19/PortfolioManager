@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Employer extends Model
 {
@@ -11,4 +12,9 @@ class Employer extends Model
         'name',
         'talent_id'
     ];
+    public function videos(): HasMany
+    {
+        return $this->hasMany(Video::class);
+    }
+
 }
