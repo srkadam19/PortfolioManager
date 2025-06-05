@@ -97,3 +97,9 @@ Design and implement a basic version of a **semantic search system** for thousan
 2. **Enable fast (almost instant) matching** between a user’s query (natural language) and relevant talent.
 
 **NOTE**: Part 2 is intentionally left open-ended to encourage you to propose your own solutions.
+
+
+working urls
+http://portfoliomanager.local/portfolio/sonu-choudhary
+https://designshack.net/articles/inspiration/personal-portfolio-websites/
+https://romain-reglade-mnpu.format.com
