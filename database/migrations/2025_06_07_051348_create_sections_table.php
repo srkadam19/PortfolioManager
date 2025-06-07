@@ -11,8 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('videos', function (Blueprint $table) {
-            $table->foreignId('project_id')->nullable()->constrained()->onDelete('set null');
+        Schema::create('sections', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('talent_id')->constrained('talents')->onDelete('cascade');
+            $table->string('title')->nullable();
+            $table->text('content');
+            $table->timestamps();
         });
     }
 
@@ -21,8 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('videos', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('sections');
     }
 };

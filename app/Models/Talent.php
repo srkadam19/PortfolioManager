@@ -23,4 +23,12 @@ class Talent extends Model
         return $this->hasManyThrough(Video::class, Employer::class);
     }
 
+    public function sections()
+    {
+        return $this->hasMany(Sections::class);
+    }
+    public function skills()
+    {
+        return $this->hasMany(Skills::class);
+    }
 }

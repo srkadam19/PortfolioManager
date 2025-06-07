@@ -5,6 +5,8 @@ use Illuminate\Http\Request;
 use App\Models\Talent;
 use App\Models\Employer;
 use App\Models\Project;
+use App\Models\Sections;
+use App\Models\Skills;
 use App\Models\Video;
 use App\Services\PortfolioScraper;
 
@@ -14,7 +16,7 @@ class PortfolioController extends Controller
     {
         $scraper = new PortfolioScraper();
         $data = $scraper->scrapePortfolio($request->url);
-
+        info($data);
         $talent = Talent::create([
             'username' => $request->username,
             'name' => $data['name'],
@@ -22,16 +24,23 @@ class PortfolioController extends Controller
             'location' => $data['location'],
             'profile_image' => $data['profileImage'],
             'social_links' => json_encode($data['social_links']),
-            'bio' => implode(", ", array_column($data['sections'], 'content'))
+            'bio' => implode(", ", array_column($data['sections'], 'content')),
         ]);
 
-        // foreach ($data['sections'] as $section) {
-        //     Section::create([
-        //         'talent_id' => $talent->id,
-        //         'title' => $section['title'],
-        //         'content' => $section['content']
-        //     ]);
-        // }
+        foreach ($data['sections'] as $section) {
+            Sections::create([
+                'talent_id' => $talent->id,
+                'title' => $section['title'],
+                'content' => $section['content']
+            ]);
+        }
+
+        foreach ($data['skills'] as $skill) {
+            Skills::create([
+                'talent_id' => $talent->id,
+                'name' => $skill
+            ]);
+        }
 
         $employer = Employer::firstOrCreate([
             'name' => 'Unknown',
@@ -49,6 +58,35 @@ class PortfolioController extends Controller
         }
 
         return response()->json(['talent' => $talent], 201);
+        // $scraper = new PortfolioScraper();
+        // $data = $scraper->scrapePortfolio($request->url);
+        // info($data);
+        // $talent = Talent::create([
+        //     'username' => $request->username,
+        //     'name' => $data['name'],
+        //     'email' => $data['email'],
+        //     'location' => $data['location'],
+        //     'profile_image' => $data['profileImage'],
+        //     'social_links' => json_encode($data['social_links']),
+        //     'bio' => implode(", ", array_column($data['sections'], 'content'))
+        // ]);
+
+
+        // $employer = Employer::firstOrCreate([
+        //     'name' => 'Unknown',
+        //     'talent_id' => $talent->id
+        // ]);
+        // foreach ($data['videos'] as $video) {
+        //     Video::create([
+        //         'url' => $video['url'],
+        //         'title' => $video['title'],
+        //         'description' => $video['description'],
+        //         'thumbnail' => $video['thumbnail'],
+        //         'employer_id' => $employer->id
+        //     ]);
+        // }
+
+        // return response()->json(['talent' => $talent], 201);
 
 
         // $scraper = new PortfolioScraper();

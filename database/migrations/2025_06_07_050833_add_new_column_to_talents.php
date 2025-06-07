@@ -11,14 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('projects', function (Blueprint $table) {
-            $table->id();
-            $table->string('title');
-            $table->text('description')->nullable();
-            $table->foreignId('employer_id')->constrained()->onDelete('cascade');
-            $table->timestamps();
+        Schema::table('talents', function (Blueprint $table) {
+            $table->string('email')->nullable();
+            $table->string('location')->nullable();
+            $table->string('profile_image')->nullable();
+            $table->json('social_links')->nullable();
         });
-
     }
 
     /**
@@ -26,6 +24,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('projects');
+        Schema::table('talents', function (Blueprint $table) {
+            //
+        });
     }
 };

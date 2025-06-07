@@ -11,11 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('talents', function (Blueprint $table) {
-            $table->string('email')->nullable();
-            $table->string('phone')->nullable();
-            $table->string('location')->nullable();
-            $table->string('profile_image_url')->nullable();
+        Schema::table('videos', function (Blueprint $table) {
+            $table->string('title')->nullable();
+            $table->text('description')->nullable();
+            $table->string('thumbnail')->nullable();
         });
     }
 
@@ -24,7 +23,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('talents', function (Blueprint $table) {
+        Schema::table('videos', function (Blueprint $table) {
             //
         });
     }
