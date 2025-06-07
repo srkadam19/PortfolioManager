@@ -9,11 +9,16 @@ use App\Models\Sections;
 use App\Models\Skills;
 use App\Models\Video;
 use App\Services\PortfolioScraper;
+use App\Services\PortfolioScraperTesseractOCR;
 
 class PortfolioController extends Controller
 {
     public function store(Request $request)
     {
+        $scraper = new PortfolioScraperTesseractOCR();
+        $data = $scraper->scrapePortfolio($request->url);
+        info($data);
+        dd($data);
         $scraper = new PortfolioScraper();
         $data = $scraper->scrapePortfolio($request->url);
         info($data);
