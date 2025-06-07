@@ -9,7 +9,13 @@ class Talent extends Model
 {
     protected $table = "talents";
     protected $fillable = [
-        'username'
+        'username',
+        'name',
+        'email',
+        'phone',
+        'location',
+        'profile_image_url',
+        'bio',
     ];
 
     public function employers(): HasMany

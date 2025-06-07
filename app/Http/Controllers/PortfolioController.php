@@ -306,7 +306,7 @@ class PortfolioController extends Controller
 
     public function show($username)
     {
-        $talent = Talent::where('username', $username)->with('employers.videos')->first();
+        $talent = Talent::where('username', $username)->with('employers.videos','sections')->first();
         return response()->json($talent);
     }
 
