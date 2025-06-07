@@ -6,7 +6,7 @@ use Symfony\Component\Panther\DomCrawler\Crawler;
 
 class PortfolioScraper
 {
-    public function scrapePortfolio(string $url): array
+    /*public function scrapePortfolio(string $url): array
     {
         $client = Client::createChromeClient(
         base_path('drivers/chromedriver.exe'),
@@ -156,9 +156,9 @@ class PortfolioScraper
         preg_match_all('/\b(video editing|youtube|final cut|premiere|after effects|motion graphics)\b/i', $html, $matches);
         return array_unique(array_map('trim', $matches[0]));
     }
+    */
 
 
-    /*
     public function scrapePortfolio(string $url): array
     {
         $client = Client::createChromeClient(base_path('drivers/chromedriver.exe'));
@@ -235,7 +235,7 @@ class PortfolioScraper
 
         return $videos;
     }
-    */
+
     /*3
     public function scrapePortfolio(string $url): array
     {
