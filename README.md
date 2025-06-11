@@ -16,4 +16,4 @@ Before installing, ensure you have:
 
 ## Installation
 Run the following commands:
-composer install
+php artisan composer install
