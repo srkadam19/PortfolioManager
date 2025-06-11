@@ -1,0 +1,58 @@
+---------------------------------------------------------------------------
+Note: for your reference I have pushed .env file, later will remove it.
+---------------------------------------------------------------------------
+/* for webscrapping and storing data*/
+API Endpoint: http://portfoliomanager.local/portfolio
+Method: POST
+Payload: {
+    "url": "https://sonuchoudhary.my.canva.site/portfolio",
+    "username": "sonuchoudhary"
+}
+
+Files
+->  route - api.php
+Route::post('/portfolio', [PortfolioController::class, 'store']);
+
+->  controller - PortfolioController.php
+    function name - store
+-> service - PortfolioScraper.php
+    function name - scrapePortfolio
+
+---------------------------------------------------------------------------
+/* for fetching portfolio data*/
+API Endpoint: http://portfoliomanager.local/portfolio/sonuchoudhary
+Method: GET
+
+Files
+->  route - api.php
+Route::get('/portfolio/{username}', [PortfolioController::class, 'show']);
+
+->  controller - PortfolioController.php
+    function name - show
+
+---------------------------------------------------------------------------
+/* for updating portfolio data*/
+API Endpoint: http://portfoliomanager.local/portfolio/sonuchoudhary
+Method: PUT
+Payload: {
+    "bio": "test",      //can add more data for updation
+}
+
+Files
+->  route - api.php
+Route::put('/portfolio/{username}', [PortfolioController::class, 'update']);
+
+->  controller - PortfolioController.php
+    function name - update
+
+---------------------------------------------------------------------------
+/* for deleting portfolio data*/
+API Endpoint: http://portfoliomanager.local/portfolio/sonuchoudhary
+Method: DELETE
+
+Files
+->  route - api.php
+Route::delete('/portfolio/{username}', [PortfolioController::class, 'destroy']);
+
+->  controller - PortfolioController.php
+    function name - destroy
